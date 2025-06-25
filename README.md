@@ -5,7 +5,7 @@ A sleek SaaS-style platform built with React & MongoDB to explore and manage dev
 ---
 
 ## 🌐 Live Demo  
-🔗 [Deployed Version on Vercel](https://devscoop-509dd.web.app/)
+🔗 [Live Link](https://devscoop-509dd.web.app/)
 
 ---
 
@@ -42,20 +42,55 @@ A sleek SaaS-style platform built with React & MongoDB to explore and manage dev
 - 🎬 Lottie & Framer motion for smooth animations  
 
 ---
+## 📁 Project Structure
+
+DevScoop/
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── layouts/
+│   │   └── App.jsx
+│   └── package.json
+├── backend/
+│   ├── server/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   └── server.js
+└── README.md
 
 ## 📸 Screenshots
 
-![DevScoop Dashboard](https://i.ibb.co/your-screenshot.png)  
-_Interactive dashboard with resource cards and stats_
+### 📰 All Blogs Page
+![All Blogs](https://i.ibb.co/jkLLFMfD/Screenshot-2025-06-25-155648.png)
 
 ---
+
+### 🎯 Recommended Blogs Section
+![Recommended Blogs](https://i.ibb.co/fzHVWLxs/Screenshot-2025-06-25-155722.png)
+
+---
+
+### 🌱 Tips Subscribe Page
+![Tips Page](https://i.ibb.co/d06crV0Q/Screenshot-2025-06-25-155748.png)
+
 
 ## ⚙️ Running Locally
 
 1. **Frontend**  
-   ```bash
+   bash
    cd frontend
    npm install
    # add .env:
    #   VITE_FIREBASE_API_KEY=...
    npm run dev
+ 2. **Backend**
+bash
+cd backend
+npm install
+# add .env:
+#   MONGODB_URI=your_mongo_uri
+#   JWT_SECRET=your_secret_key
+npm start
