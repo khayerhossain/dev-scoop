@@ -63,18 +63,11 @@ DevScoop/
 
 ## 📸 Screenshots
 
-### 📰 All Blogs Page
-![All Blogs](https://i.ibb.co/jkLLFMfD/Screenshot-2025-06-25-155648.png)
+[All Blogs Screenshot](https://i.ibb.co/jkLLFMfD/Screenshot-2025-06-25-155648.png)
 
----
+[Recommended Blogs Screenshot](https://i.ibb.co/fzHVWLxs/Screenshot-2025-06-25-155722.png)
 
-### 🎯 Recommended Blogs Section
-![Recommended Blogs](https://i.ibb.co/fzHVWLxs/Screenshot-2025-06-25-155722.png)
-
----
-
-### 🌱 Tips Subscribe Page
-![Tips Page](https://i.ibb.co/d06crV0Q/Screenshot-2025-06-25-155748.png)
+[Tips Subscribe Page Screenshot](https://i.ibb.co/d06crV0Q/Screenshot-2025-06-25-155748.png)
 
 
 ## ⚙️ Running Locally
