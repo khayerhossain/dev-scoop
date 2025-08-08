@@ -39,7 +39,7 @@ const Login = () => {
       .then((result) => {
         console.log(result)
         navigate(redirectPath);
-       toast.success('Login successful! 🎉');
+       toast.success('Login successful!');
       })
       .catch((error) => {
         console.error('Google login error:', error);
@@ -48,7 +48,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100 px-4 py-6 pt-0 lg:pt-20 pb-0 lg:pb-32">
+    <div className="flex items-center justify-center bg-gray-100 px-4 py-6 pt-0 pb-0 lg:py-10">
       <div className="flex flex-col-reverse md:flex-row bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl w-full border border-gray-200">
 
         {/* Left side - Form */}
