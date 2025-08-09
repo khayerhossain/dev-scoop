@@ -3,6 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { getAuth } from "firebase/auth";
 import usePageTitle from "../../PageTitle/PageTitle";
+import { Link } from "react-router";
 
 const WishList = () => {
   usePageTitle("Wishlist");
@@ -158,9 +159,11 @@ const WishList = () => {
                     {showFull[blog._id] ? "Hide" : "Read"}
                   </button>
 
-                  <button className="flex-1 px-4 py-2 rounded-lg border border-emerald-500 text-emerald-600 bg-white/70 hover:bg-emerald-500 hover:text-white transition-all duration-200 ease-in-out shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 cursor-pointer">
-                    Details
-                  </button>
+                  {/* <Link to={`/blogdetails/${blog._id}`}>
+                    <button className="flex-1 px-4 py-2 rounded-lg border border-emerald-500 text-emerald-600 bg-white/70 hover:bg-emerald-500 hover:text-white transition-all duration-200 ease-in-out shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 cursor-pointer">
+                      Details
+                    </button>
+                  </Link> */}
 
                   <button
                     onClick={() => handleDelete(blog._id)}

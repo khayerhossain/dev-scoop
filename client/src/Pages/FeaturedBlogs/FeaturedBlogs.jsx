@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import FeaturedBlogsTable from '../FeaturedBlogsTable/FeaturedBlogsTable';
 import usePageTitle from '../../PageTitle/PageTitle';
+import Loading from '../Loading/Loading';
 
 const FeaturedBlogs = () => {
   usePageTitle('Featured');
 
   const [topBlogs, setTopBlogs] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     fetch(`${import.meta.env.VITE_API_URL}/allblogsdata`)
       .then(res => res.json())
       .then(data => {
@@ -19,13 +22,20 @@ const FeaturedBlogs = () => {
           }))
           .sort((a, b) => b.wordCount - a.wordCount)
           .slice(0, 10);
+
         setTopBlogs(sortedBlogs);
+        setLoading(false);
       })
       .catch(err => {
         console.error("Error fetching blogs:", err);
         setError("Failed to load blogs");
+        setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    return <Loading />
+  }
 
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 py-10">

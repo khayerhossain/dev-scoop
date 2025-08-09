@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { getAuth } from "firebase/auth";
 import Container from "../../components/container/container";
+import Loading from "../Loading/Loading";
 
 const BlogDetails = () => {
   const { id } = useParams();
@@ -11,6 +12,7 @@ const BlogDetails = () => {
   const [blog, setBlog] = useState(null);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true); // 🔹 Loading state
   const navigate = useNavigate();
 
   const API_BASE = import.meta.env.VITE_API_URL;
@@ -18,6 +20,7 @@ const BlogDetails = () => {
   useEffect(() => {
     const foundBlog = allBlogs.find((blog) => blog._id === id);
     setBlog(foundBlog);
+    setLoading(false); // ব্লগ ডেটা সেট হওয়ার পর লোডিং শেষ
   }, [id, allBlogs]);
 
   useEffect(() => {
@@ -65,10 +68,14 @@ const BlogDetails = () => {
     }
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
   if (!blog)
     return (
       <p className="text-center mt-10 text-xl font-medium">
-        Blog not found or loading...
+        Blog not found.
       </p>
     );
 
@@ -161,7 +168,7 @@ const BlogDetails = () => {
           onClick={() => navigate("/")}
           className="btn btn-outline btn-primary px-6 py-2 rounded-lg hover:scale-105 transition"
         >
-          ⬅ Back to Home
+          Back to Home
         </button>
       </div>
     </div>
