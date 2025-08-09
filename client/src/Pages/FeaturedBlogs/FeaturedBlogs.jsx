@@ -30,7 +30,7 @@ const FeaturedBlogs = () => {
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 py-10">
       <div className="text-center mb-10">
-        <h2 className="text-2xl sm:text-2xl font-bold text-gray-800 mb-2">📌 Top 10 Featured Blogs</h2>
+        <h2 className="text-2xl sm:text-2xl font-bold text-gray-800 mb-2 mt-10">📌 Top 10 Featured Blogs</h2>
         <p className="text-gray-600 text-base max-w-2xl mx-auto">
           A collection of the top 10 most informative and insightful blogs based on word count — perfect for deep dives into development topics.
         </p>

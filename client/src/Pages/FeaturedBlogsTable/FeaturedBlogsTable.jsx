@@ -58,14 +58,14 @@ const FeaturedBlogsTable = ({ blogs }) => {
           </span>
         ),
       },
-      {
-        id: 'actions',
-        header: 'Actions',
-        cell: () => (
-          <button className="text-gray-400 hover:text-gray-700 text-xl">⋯</button>
-        ),
-        meta: { align: 'right' },
-      },
+      // {
+      //   id: 'actions',
+      //   header: 'Actions',
+      //   cell: () => (
+      //     <button className="text-gray-400 hover:text-gray-700 text-xl">⋯</button>
+      //   ),
+      //   meta: { align: 'right' },
+      // },
     ],
     []
   );

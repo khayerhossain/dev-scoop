@@ -10,9 +10,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // hide navbar in login/register page
-  const hideNavbarPaths = ["/login", "/register"];
-  if (hideNavbarPaths.includes(location.pathname)) return null;
+  // // hide navbar in login/register page
+  // const hideNavbarPaths = ["/login", "/register"];
+  // if (hideNavbarPaths.includes(location.pathname)) return null;
 
   const handleSignOut = () => {
     signOutUser()
@@ -39,18 +39,22 @@ const Navbar = () => {
           Home
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/addblogs"
-          className={({ isActive }) =>
-            isActive
-              ? "font-semibold text-indigo-600 underline"
-              : "hover:text-indigo-500"
-          }
-        >
-          Add Blog
-        </NavLink>
-      </li>
+
+      {user && (
+        <li>
+          <NavLink
+            to="/addblogs"
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-indigo-600 underline"
+                : "hover:text-indigo-500"
+            }
+          >
+            Add Blog
+          </NavLink>
+        </li>
+      )}
+
       <li>
         <NavLink
           to="/allblogs"
@@ -63,6 +67,7 @@ const Navbar = () => {
           All Blogs
         </NavLink>
       </li>
+
       <li>
         <NavLink
           to="/featuredblogs"
@@ -75,23 +80,26 @@ const Navbar = () => {
           Featured Blogs
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/wishlist"
-          className={({ isActive }) =>
-            isActive
-              ? "font-semibold text-indigo-600 underline"
-              : "hover:text-indigo-500"
-          }
-        >
-          Wishlist
-        </NavLink>
-      </li>
+
+      {user && (
+        <li>
+          <NavLink
+            to="/wishlist"
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-indigo-600 underline"
+                : "hover:text-indigo-500"
+            }
+          >
+            Wishlist
+          </NavLink>
+        </li>
+      )}
     </>
   );
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-base-100 shadow-sm z-50">
+    <div className="fixed top-0 left-0 w-full bg-base-100 z-50">
       <Container>
         <div className="navbar">
           <div className="navbar-start">

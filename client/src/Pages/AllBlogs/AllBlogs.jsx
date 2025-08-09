@@ -1,18 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLoaderData } from "react-router";
 import AllBlogsCard from "../AllBlogsCard/AllBlogsCard";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { getAuth } from "firebase/auth";
 import Container from "../../components/container/container";
+import Loading from "../Loading/Loading";
 
 const AllBlogs = () => {
   const auth = getAuth();
-
   const allBlogs = useLoaderData();
-  console.log("index 0 blogs", allBlogs[0]);
+
   const [searchText, setSearchText] = useState("");
-  const [filteredBlogs, setFilteredBlogs] = useState(allBlogs);
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (allBlogs && allBlogs.length > 0) {
+      setFilteredBlogs(allBlogs);
+      setLoading(false);
+    }
+  }, [allBlogs]);
 
   const addToWishlist = async (blog) => {
     const token = await auth.currentUser.getIdToken();
@@ -42,7 +50,6 @@ const AllBlogs = () => {
       });
   };
 
-  // ✅ Handle search function
   const handleSearch = () => {
     const matched = allBlogs.filter((blog) =>
       blog.title?.toLowerCase().includes(searchText.toLowerCase())
@@ -63,10 +70,9 @@ const AllBlogs = () => {
           </p>
         </div>
 
-        {/* 🔍 Stylish Search Input + Button */}
+        {/* Search */}
         <div className="flex justify-center items-center mb-10 px-4">
           <div className="flex items-center w-full max-w-md bg-white border border-gray-300 rounded-xl shadow-sm focus-within:ring-2 focus-within:ring-violet-400 overflow-hidden transition">
-            <span className="pl-3 pr-1 text-gray-500 text-lg"></span>
             <input
               type="text"
               value={searchText}
@@ -84,24 +90,26 @@ const AllBlogs = () => {
         </div>
       </Container>
 
-      {/*  Show blogs */}
-      <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-          {filteredBlogs.length > 0 ? (
-            filteredBlogs.map((blog) => (
-              <AllBlogsCard
-                key={blog._id}
-                allBlogs={blog}
-                addToWishlist={addToWishlist}
-              />
-            ))
-          ) : (
-            <p className="col-span-3 text-center text-red-500">
-              No blogs found by that name.
-            </p>
-          )}
-        </div>
-      </Container>
+      {/* Loading Spinner */}
+      {loading ? <Loading/> : (
+        <Container>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+            {filteredBlogs.length > 0 ? (
+              filteredBlogs.map((blog) => (
+                <AllBlogsCard
+                  key={blog._id}
+                  allBlogs={blog}
+                  addToWishlist={addToWishlist}
+                />
+              ))
+            ) : (
+              <p className="col-span-3 text-center text-red-500">
+                No blogs found by that name.
+              </p>
+            )}
+          </div>
+        </Container>
+      )}
     </div>
   );
 };

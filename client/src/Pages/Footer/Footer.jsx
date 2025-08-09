@@ -83,7 +83,7 @@ const Footer = () => {
           </div>
 
           {/* Social */}
-          <div className="mt-5 ml-0 lg:ml-20">
+          <div className="mt-5 ml-0 md:ml-8 lg:ml-24">
             <h3 className="text-white font-semibold mb-2">Connect With Us</h3>
             <div className="flex gap-4 text-xl">
               <a
