@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import bannerOne from "../../assets/Animations/banner-2.json";
 import Container from "../../components/container/container";
+import { Link } from "react-router";
 
 const Banner = () => {
   return (
@@ -35,9 +36,11 @@ const Banner = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
+             <Link to="/allblogs">
               <button className="btn btn-primary px-6 py-2.5 text-base sm:text-lg rounded-lg hover:scale-105 transition duration-300">
                 Discover Now
               </button>
+             </Link>
             </motion.div>
           </div>
 
