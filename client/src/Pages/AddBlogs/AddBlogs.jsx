@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 import usePageTitle from "../../PageTitle/PageTitle";
 import Container from "../../components/container/container";
 
@@ -33,20 +34,49 @@ const AddBlogs = () => {
       });
   };
 
-  return (
-    <section className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-white py-20 mt-5">
-      <Container>
-        <div
-          className="w-full bg-white text-gray-800 rounded-2xl shadow-lg border border-gray-200 p-8
-        animate-[fadeInUp_0.8s_ease-out]"
-        >
-          <h2 className="text-3xl font-extrabold mb-10 text-center text-gray-900 tracking-tight">
-            Add a New Blog
-          </h2>
+  // Animation Variants
+  const containerVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-8 w-full">
-            {/* Group 1: Title + Image URL */}
-            <div className="flex flex-wrap gap-8">
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+  };
+
+  return (
+    <section className="w-full min-h-screen flex items-center justify-center bg-base-200 py-20 mt-5">
+      <Container>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="w-full bg-white text-gray-800 rounded-2xl shadow-lg border border-gray-200 p-8"
+        >
+          <motion.h2
+            variants={itemVariants}
+            className="text-3xl font-extrabold mb-10 text-center text-gray-900 tracking-tight"
+          >
+            Add a New Blog
+          </motion.h2>
+
+          <motion.form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-8 w-full"
+            initial="hidden"
+            animate="visible"
+            transition={{ staggerChildren: 0.1 }}
+          >
+            {/* Group 1 */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap gap-8"
+            >
               <div className="flex-1 min-w-[250px]">
                 <label className="block text-gray-700 font-semibold mb-2">
                   Blog Title
@@ -57,7 +87,7 @@ const AddBlogs = () => {
                   placeholder="Enter your blog title here"
                   required
                   className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm 
-                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 />
               </div>
               <div className="flex-1 min-w-[250px]">
@@ -70,13 +100,16 @@ const AddBlogs = () => {
                   placeholder="Paste image link here"
                   required
                   className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm 
-                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 />
               </div>
-            </div>
+            </motion.div>
 
-            {/* Group 2: Category + Date */}
-            <div className="flex flex-wrap gap-8">
+            {/* Group 2 */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap gap-8"
+            >
               <div className="flex-1 min-w-[250px]">
                 <label className="block text-gray-700 font-semibold mb-2">
                   Category
@@ -85,7 +118,7 @@ const AddBlogs = () => {
                   name="category"
                   required
                   className="w-full px-5 py-3 border border-gray-300 rounded-xl bg-white shadow-sm 
-                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 >
                   <option value="">Select a Category</option>
                   <option value="Technology">Technology</option>
@@ -104,13 +137,13 @@ const AddBlogs = () => {
                   defaultValue={new Date().toISOString().split("T")[0]}
                   required
                   className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm 
-                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 />
               </div>
-            </div>
+            </motion.div>
 
             {/* Short Description */}
-            <div>
+            <motion.div variants={itemVariants}>
               <label className="block text-gray-700 font-semibold mb-2">
                 Short Description
               </label>
@@ -120,12 +153,12 @@ const AddBlogs = () => {
                 required
                 rows={3}
                 className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm 
-              focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-none"
+                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-none"
               ></textarea>
-            </div>
+            </motion.div>
 
             {/* Long Description */}
-            <div>
+            <motion.div variants={itemVariants}>
               <label className="block text-gray-700 font-semibold mb-2">
                 Long Description
               </label>
@@ -135,21 +168,21 @@ const AddBlogs = () => {
                 required
                 rows={6}
                 className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm 
-              focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-none"
+                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-none"
               ></textarea>
-            </div>
+            </motion.div>
 
             {/* Submit Button */}
-            <div>
+            <motion.div variants={itemVariants}>
               <input
                 type="submit"
                 value="Submit Blog"
                 className="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold 
-              hover:bg-indigo-700 transition shadow-md cursor-pointer"
+                hover:bg-indigo-700 transition shadow-md cursor-pointer"
               />
-            </div>
-          </form>
-        </div>
+            </motion.div>
+          </motion.form>
+        </motion.div>
       </Container>
     </section>
   );
