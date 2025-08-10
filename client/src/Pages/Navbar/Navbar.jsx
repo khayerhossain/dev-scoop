@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, NavLink, useNavigate, useLocation } from "react-router";
+import { Link, NavLink, useNavigate,} from "react-router";
 import { AuthContext } from "../../Providers/AuthContext";
 import NavLogo from "../../assets/Images/nav-logo-2.png";
 import toast from "react-hot-toast";
@@ -8,7 +8,9 @@ import Container from "../../components/container/container";
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
+
+
 
   // // hide navbar in login/register page
   // const hideNavbarPaths = ["/login", "/register"];
