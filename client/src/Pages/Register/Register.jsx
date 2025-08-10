@@ -98,7 +98,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100 px-4 py-6 pt-0 lg:pt-20 pb-0 lg:pb-32">
+    <div className="flex items-center justify-center bg-gray-100 px-4 py-6 pt-0 lg:pt-20 pb-0 lg:pb-20 mt-0 lg:mt-10">
       <div className="flex flex-col-reverse md:flex-row bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl w-full border border-gray-200">
         
         {/* Left side - Form */}
