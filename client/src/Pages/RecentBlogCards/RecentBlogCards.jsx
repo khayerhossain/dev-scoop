@@ -9,53 +9,53 @@ const RecentBlogCards = ({ blog, addToWishlist }) => {
     addToWishlist(blog);
   };
 
-  const buttonBaseClass =
-    "flex-1 h-10 px-4 rounded-lg transition-all duration-200 ease-in-out shadow-sm focus:outline-none cursor-pointer";
-
   return (
     <motion.div
-      className="max-w-md mx-auto bg-gradient-to-br from-white/90 to-gray-100 backdrop-blur-md border border-gray-200 rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 mt-8 flex flex-col h-[420px]"
+      className="group bg-white/60 backdrop-blur-md border border-gray-200 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col"
       initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      whileHover={{ scale: 1.02 }}
+      whileHover={{ y: -5 }}
     >
-      {/* Image */}
-      <img
-        className="w-full h-44 object-cover rounded-t-xl"
-        src={blog.imageURL}
-        alt="Blog Banner"
-      />
+      {/* Image Section */}
+      <div className="relative overflow-hidden rounded-t-2xl">
+        <motion.img
+          src={blog.imageURL}
+          alt="Blog Banner"
+          className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </div>
 
       {/* Content */}
-      <div className="p-5 flex flex-col flex-grow">
-        <div className="flex justify-between items-center text-xs text-gray-500 mb-2">
-          <span className="px-2 py-0.5 bg-blue-100 text-blue-600 rounded-full text-xs font-medium">
+      <div className="flex flex-col flex-grow p-6">
+        {/* Category + Date */}
+        <div className="flex justify-between items-center mb-2">
+          <span className="px-3 py-1 text-xs font-medium bg-gray-900 text-white rounded-full shadow-sm">
             {blog.category}
           </span>
-          <span>{blog.date}</span>
+          <span className="text-xs text-gray-500">{blog.date}</span>
         </div>
 
-        <h2 className="text-xl font-semibold text-gray-800 mb-2 hover:text-blue-600 transition">
+        {/* Title */}
+        <h2 className="text-xl font-semibold text-gray-900 mb-3 leading-tight hover:text-gray-700 transition">
           {blog.title}
         </h2>
 
-        <p className="text-gray-600 text-sm leading-relaxed flex-grow">
+        {/* Description */}
+        <p className="text-gray-600 text-sm leading-relaxed mb-4 flex-grow">
           {showFull ? blog.longDescription : blog.shortDescription}
         </p>
 
-        {/* Buttons always at bottom */}
-        <div className="flex justify-between gap-3 text-sm mt-auto">
+        {/* Buttons */}
+        <div className="flex gap-3 mt-auto">
           {/* Read More */}
           <motion.button
             onClick={() => setShowFull(!showFull)}
-            className={`${buttonBaseClass} ${
-              showFull
-                ? "bg-blue-500 text-white border border-blue-500 hover:bg-blue-600"
-                : "text-blue-600 bg-white/70 border border-blue-500 hover:bg-blue-500 hover:text-white"
-            } focus:ring-2 focus:ring-blue-400`}
+            className={`flex-1 h-10 rounded-full border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 font-medium transition-all duration-300 focus:outline-none`}
             whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
+            whileTap={{ scale: 0.95 }}
           >
             {showFull ? "Hide" : "Read"}
           </motion.button>
@@ -63,12 +63,12 @@ const RecentBlogCards = ({ blog, addToWishlist }) => {
           {/* Details */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
+            whileTap={{ scale: 0.95 }}
             className="flex-1"
           >
             <Link
               to={`blogdetails/${blog._id}`}
-              className={`${buttonBaseClass} border border-emerald-500 text-emerald-600 bg-white/70 hover:bg-emerald-500 hover:text-white focus:ring-2 focus:ring-emerald-400 flex items-center justify-center`}
+              className="flex items-center justify-center h-10 rounded-full border border-gray-800 text-gray-900 bg-white hover:bg-gray-900 hover:text-white font-medium transition-all duration-300"
             >
               Details
             </Link>
@@ -77,9 +77,9 @@ const RecentBlogCards = ({ blog, addToWishlist }) => {
           {/* Wishlist */}
           <motion.button
             onClick={handleWishlistClick}
-            className={`${buttonBaseClass} border border-rose-500 text-rose-500 bg-white/70 hover:bg-rose-500 hover:text-white focus:ring-2 focus:ring-rose-400`}
+            className="flex-1 h-10 rounded-full border border-pink-500 text-pink-600 bg-white hover:bg-pink-500 hover:text-white font-medium transition-all duration-300"
             whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
+            whileTap={{ scale: 0.95 }}
           >
             Wishlist
           </motion.button>

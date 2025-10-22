@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, NavLink, useNavigate,} from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../Providers/AuthContext";
 import NavLogo from "../../assets/Images/nav-logo-2.png";
 import toast from "react-hot-toast";
@@ -8,23 +8,14 @@ import Container from "../../components/container/container";
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  // const location = useLocation();
-
-
-
-  // // hide navbar in login/register page
-  // const hideNavbarPaths = ["/login", "/register"];
-  // if (hideNavbarPaths.includes(location.pathname)) return null;
 
   const handleSignOut = () => {
     signOutUser()
       .then(() => {
-        toast.success("Logout successfully!");
+        toast.success("Logged out successfully!");
         navigate("/login");
       })
-      .catch((error) => {
-        console.error("Sign out error:", error);
-      });
+      .catch((error) => console.error("Sign out error:", error));
   };
 
   const links = (
@@ -34,8 +25,8 @@ const Navbar = () => {
           to="/"
           className={({ isActive }) =>
             isActive
-              ? "font-semibold text-indigo-600 underline"
-              : "hover:text-indigo-500"
+              ? "font-semibold text-gray-900 underline underline-offset-4"
+              : "text-gray-700 hover:text-gray-900 transition"
           }
         >
           Home
@@ -48,8 +39,8 @@ const Navbar = () => {
             to="/addblogs"
             className={({ isActive }) =>
               isActive
-                ? "font-semibold text-indigo-600 underline"
-                : "hover:text-indigo-500"
+                ? "font-semibold text-gray-900 underline underline-offset-4"
+                : "text-gray-700 hover:text-gray-900 transition"
             }
           >
             Add Blog
@@ -62,8 +53,8 @@ const Navbar = () => {
           to="/allblogs"
           className={({ isActive }) =>
             isActive
-              ? "font-semibold text-indigo-600 underline"
-              : "hover:text-indigo-500"
+              ? "font-semibold text-gray-900 underline underline-offset-4"
+              : "text-gray-700 hover:text-gray-900 transition"
           }
         >
           All Blogs
@@ -75,11 +66,11 @@ const Navbar = () => {
           to="/featuredblogs"
           className={({ isActive }) =>
             isActive
-              ? "font-semibold text-indigo-600 underline"
-              : "hover:text-indigo-500"
+              ? "font-semibold text-gray-900 underline underline-offset-4"
+              : "text-gray-700 hover:text-gray-900 transition"
           }
         >
-          Featured Blogs
+          Featured
         </NavLink>
       </li>
 
@@ -89,8 +80,8 @@ const Navbar = () => {
             to="/wishlist"
             className={({ isActive }) =>
               isActive
-                ? "font-semibold text-indigo-600 underline"
-                : "hover:text-indigo-500"
+                ? "font-semibold text-gray-900 underline underline-offset-4"
+                : "text-gray-700 hover:text-gray-900 transition"
             }
           >
             Wishlist
@@ -101,9 +92,10 @@ const Navbar = () => {
   );
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-base-100 z-50">
+    <div className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 ">
       <Container>
         <div className="navbar">
+          {/* Left: Logo */}
           <div className="navbar-start">
             <div className="dropdown">
               <div
@@ -113,7 +105,7 @@ const Navbar = () => {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
+                  className="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -128,34 +120,49 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-3 shadow-lg backdrop-blur-xl bg-white/80 rounded-2xl w-52"
               >
                 {links}
               </ul>
             </div>
 
-            <Link to="/" className="hidden lg:flex items-center gap-2">
-              <img src={NavLogo} alt="Logo" className="w-8 h-8 rounded" />
-              <span className="text-2xl font-extrabold">DevScoop</span>
+            <Link to="/" className="flex items-center gap-2">
+              <img
+                src={NavLogo}
+                alt="Logo"
+                className="w-8 h-8 rounded-full border border-gray-100 shadow-sm "
+              />
+              <span className="text-2xl font-bold text-gray-900 tracking-tight">
+                DevScoop
+              </span>
             </Link>
           </div>
 
+          {/* Center: Links */}
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1 gap-2">{links}</ul>
+            <ul className="menu menu-horizontal px-1 gap-6 text-base font-medium">
+              {links}
+            </ul>
           </div>
 
-          <div className="navbar-end flex items-center gap-3">
+          {/* Right: Profile & Auth */}
+          <div className="navbar-end flex items-center gap-4">
             {user && (
-              <div className="avatar">
-                <div className="w-10 rounded-full ring ring-indigo-300 ring-offset-base-100 ring-offset-2">
-                  <img
-                    src={
-                      user?.photoURL
-                        ? user.photoURL
-                        : "https://img.daisyui.com/images/profile/demo/spiderperson@192.webp"
-                    }
-                    alt="User"
-                  />
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip={user?.displayName || "User"}
+              >
+                <div className="avatar cursor-pointer">
+                  <div className="w-10 h-10 rounded-full ring ring-gray-300 ring-offset-2 overflow-hidden shadow-sm">
+                    <img
+                      src={
+                        user?.photoURL
+                          ? user.photoURL
+                          : "https://img.daisyui.com/images/profile/demo/spiderperson@192.webp"
+                      }
+                      alt="User Avatar"
+                    />
+                  </div>
                 </div>
               </div>
             )}
@@ -163,25 +170,25 @@ const Navbar = () => {
             {user ? (
               <button
                 onClick={handleSignOut}
-                className="btn btn-outline btn-error rounded-lg hover:scale-105 transition"
+                className="btn bg-white border border-gray-300 text-gray-800  hover:bg-gray-100 hover:scale-105 transition-transform duration- rounded-md"
               >
                 Logout
               </button>
             ) : (
-              <>
+              <div className="flex gap-2">
                 <Link
                   to="/login"
-                  className="btn btn-outline btn-primary rounded-lg hover:scale-105 transition"
+                  className="btn border border-gray-400 text-gray-800 hover:bg-gray-100 hover:scale-105 transition rounded-md"
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="btn btn-primary rounded-lg text-white hover:scale-105 transition"
+                  className="btn bg-gray-900 text-white rounded-md border-none hover:bg-gray-800 hover:scale-105 transition-transform"
                 >
                   Register
                 </Link>
-              </>
+              </div>
             )}
           </div>
         </div>

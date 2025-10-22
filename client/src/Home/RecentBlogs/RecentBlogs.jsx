@@ -10,7 +10,6 @@ const RecentBlogs = () => {
   const [wishlist, setWishlist] = useState([]);
   const auth = getAuth();
 
-  // Load recent blogs
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/blogsdata`)
@@ -18,22 +17,16 @@ const RecentBlogs = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  // Add to wishlist with client-side check
   const addToWishlist = async (blog) => {
-    const token = await auth.currentUser.getIdToken();
+    const token = await auth.currentUser?.getIdToken();
     const alreadyAdded = wishlist.find((item) => item._id === blog._id);
-    if (alreadyAdded) {
-      toast.error("Already added in Wishlist");
-      return;
-    }
+    if (alreadyAdded) return toast.error("Already in Wishlist");
 
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/wishlist`, blog, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-      toast.success("Successfully added in Wishlist");
+      toast.success("Added to Wishlist!");
       setWishlist([...wishlist, blog]);
     } catch (err) {
       console.error(err);
@@ -41,16 +34,19 @@ const RecentBlogs = () => {
   };
 
   return (
-    <div className="bg-gray-100 py-10">
+    <div className="bg-white/90 backdrop-blur-sm py-16">
       <Container>
-        <div className="">
-          <h2 className="text-3xl font-bold text-center mt-10">Recent Blogs</h2>
-          <p className="text-center text-gray-600 mb-6">
-            Stay updated with the latest trends and insights in the development
-            world.
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight mb-2">
+            Recent Blogs
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto text-base">
+            Discover trending topics, fresh ideas, and dev-world insights
+            curated just for you.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {blogs.map((blog) => (
             <RecentBlogCards
               key={blog._id}
