@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import Banner from './Banner/Banner';
 import NewzLatter from './NewzLatter/NewzLatter';
 import RecentBlogs from './RecentBlogs/RecentBlogs';
@@ -10,13 +11,18 @@ const Home = () => {
     usePageTitle('Home');
 
     return (
-        <div>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100"
+        >
             <Banner/>
             <RecentBlogs/>
             <ExtraSection/>
             <Tips/>
             <NewzLatter/>
-        </div>
+        </motion.div>
     );
 };
 

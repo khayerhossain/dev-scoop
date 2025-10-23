@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../Providers/AuthContext";
-import NavLogo from "../../assets/Images/nav-logo-2.png";
 import toast from "react-hot-toast";
 import Container from "../../components/container/container";
+import { Code2, LayoutDashboard, User, LogOut } from "lucide-react";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
@@ -33,21 +33,6 @@ const Navbar = () => {
         </NavLink>
       </li>
 
-      {user && (
-        <li>
-          <NavLink
-            to="/addblogs"
-            className={({ isActive }) =>
-              isActive
-                ? "font-semibold text-gray-900 underline underline-offset-4"
-                : "text-gray-700 hover:text-gray-900 transition"
-            }
-          >
-            Add Blog
-          </NavLink>
-        </li>
-      )}
-
       <li>
         <NavLink
           to="/allblogs"
@@ -74,33 +59,45 @@ const Navbar = () => {
         </NavLink>
       </li>
 
+      <li>
+        <NavLink
+          to="/recommendations"
+          className={({ isActive }) =>
+            isActive
+              ? "font-semibold text-gray-900 underline underline-offset-4"
+              : "text-gray-700 hover:text-gray-900 transition"
+          }
+        >
+          AI Recommendations
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink
+          to="/search"
+          className={({ isActive }) =>
+            isActive
+              ? "font-semibold text-gray-900 underline underline-offset-4"
+              : "text-gray-700 hover:text-gray-900 transition"
+          }
+        >
+          Smart Search
+        </NavLink>
+      </li>
+
       {user && (
-        <ul className="flex gap-4">
-          <li>
-            <NavLink
-              to="/wishlist"
-              className={({ isActive }) =>
-                isActive
-                  ? "font-semibold text-gray-900 underline underline-offset-4"
-                  : "text-gray-700 hover:text-gray-900 transition"
-              }
-            >
-              Wishlist
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/profile"
-              className={({ isActive }) =>
-                isActive
-                  ? "font-semibold text-gray-900 underline underline-offset-4"
-                  : "text-gray-700 hover:text-gray-900 transition"
-              }
-            >
-              Profile
-            </NavLink>
-          </li>
-        </ul>
+        <li>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-gray-900 underline underline-offset-4"
+                : "text-gray-700 hover:text-gray-900 transition"
+            }
+          >
+            Dashboard
+          </NavLink>
+        </li>
       )}
     </>
   );
@@ -112,11 +109,9 @@ const Navbar = () => {
           {/* LEFT: Logo and Name */}
           <div className="flex items-center gap-2 navbar-start">
             <Link to="/" className="flex items-center gap-2">
-              <img
-                src={NavLogo}
-                alt="Logo"
-                className="w-8 h-8 rounded-full border border-gray-100 shadow-sm"
-              />
+              <div className="bg-gradient-to-br from-primary to-primary-glow p-2 rounded-lg">
+                <Code2 className="w-5 h-5 text-primary-foreground " />
+              </div>
               <span className="text-lg lg:text-2xl font-bold text-gray-900 tracking-tight">
                 DevScoop
               </span>
@@ -134,11 +129,8 @@ const Navbar = () => {
           <div className="navbar-end">
             {/* Large screen buttons */}
             <div className="hidden lg:flex items-center gap-4">
-              {user && (
-                <div
-                  className="tooltip tooltip-bottom"
-                  data-tip={user?.displayName || "User"}
-                >
+              {user ? (
+                <div className="flex items-center gap-3">
                   <div className="avatar cursor-pointer">
                     <div className="w-10 h-10 rounded-full ring ring-gray-300 ring-offset-2 overflow-hidden shadow-sm">
                       <img
@@ -151,27 +143,25 @@ const Navbar = () => {
                       />
                     </div>
                   </div>
+                  <button
+                    onClick={handleSignOut}
+                    className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200"
+                    title="Sign Out"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
                 </div>
-              )}
-
-              {user ? (
-                <button
-                  onClick={handleSignOut}
-                  className="btn bg-white border border-gray-300 text-gray-800 hover:bg-gray-100 hover:scale-105 transition-transform rounded-md"
-                >
-                  Logout
-                </button>
               ) : (
                 <div className="flex gap-2">
                   <Link
                     to="/login"
-                    className="btn border border-gray-400 text-gray-800 hover:bg-gray-100 hover:scale-105 transition rounded-md"
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
                   >
                     Login
                   </Link>
                   <Link
                     to="/register"
-                    className="btn bg-gray-900 text-white rounded-md border-none hover:bg-gray-800 hover:scale-105 transition-transform"
+                    className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
                   >
                     Register
                   </Link>

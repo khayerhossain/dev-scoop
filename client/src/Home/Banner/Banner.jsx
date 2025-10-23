@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Lottie from "lottie-react";
-import bannerOne from "../../assets/Animations/banner-2.json";
 import bannerTwo from "../../assets/Animations/banner-1.json";
 import bannerThree from "../../assets/Animations/banner-3.json";
 import bannerFour from "../../assets/Animations/banner-4.json";
@@ -9,11 +8,6 @@ import Container from "../../components/container/container";
 import { Link } from "react-router";
 
 const slides = [
-  {
-    title: "Stay Ahead with Dev Trends.",
-    desc: "Discover the latest frameworks and tools trusted by developers around the world.",
-    animation: bannerOne,
-  },
   {
     title: "Boost Your Code Game.",
     desc: "Level up your skills with daily insights and community-powered articles.",
@@ -58,13 +52,13 @@ const Banner = () => {
             {/* Left Text Section */}
             <div className="w-full lg:w-1/2 space-y-6 text-center lg:text-left">
               <motion.p
-                className="uppercase text-gray-500 tracking-wider font-medium flex items-center justify-center lg:justify-start gap-3"
+                className="uppercase text-red-500 tracking-wider font-medium flex items-center justify-center lg:justify-start gap-3"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
                 Inspiration 2025
-                <span className="w-10 h-[2px] bg-gray-400"></span>
+                <span className="w-10 h-[2px] bg-red-400"></span>
               </motion.p>
 
               <motion.h1
@@ -91,7 +85,7 @@ const Banner = () => {
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
                 <Link to="/allblogs">
-                  <button className="bg-black text-white px-8 py-3 text-lg rounded-none hover:bg-gray-900 transition-all duration-300">
+                  <button className="bg-black text-white px-8 py-3 text-lg hover:bg-gray-900 transition-all duration-300 rounded-xl">
                     Discover Now
                   </button>
                 </Link>
