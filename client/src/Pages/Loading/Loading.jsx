@@ -1,12 +1,16 @@
-import Lottie from 'lottie-react';
-import React from 'react';
-import loadingAnimation from '../../assets/Animations/Loading.json';
+import React from "react";
+import { motion } from "framer-motion";
+
 const Loading = () => {
-    return (
-        <div className='min-h-screen flex justify-center items-center'>
-             <Lottie style={{ width: '100%', maxWidth: '350px' }} animationData={loadingAnimation} loop={true} />
-        </div>
-    );
+  return (
+    <div className="flex items-center justify-center h-64 min-h-screen">
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"
+      />
+    </div>
+  );
 };
 
 export default Loading;

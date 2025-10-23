@@ -103,16 +103,16 @@ const Navbar = () => {
   );
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 border-b border-gray-100">
+    <div className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 ">
       <Container>
         <div className="navbar">
           {/* LEFT: Logo and Name */}
           <div className="flex items-center gap-2 navbar-start">
             <Link to="/" className="flex items-center gap-2">
-              <div className="bg-gradient-to-br from-primary to-primary-glow p-2 rounded-lg">
-                <Code2 className="w-5 h-5 text-primary-foreground " />
+              <div className="bg-black p-2 rounded-lg">
+                <Code2 className="w-4 h-4 text-white" />
               </div>
-              <span className="text-lg lg:text-2xl font-bold text-gray-900 tracking-tight">
+              <span className="text-lg font-bold text-gray-900 tracking-tight">
                 DevScoop
               </span>
             </Link>
@@ -133,14 +133,16 @@ const Navbar = () => {
                 <div className="flex items-center gap-3">
                   <div className="avatar cursor-pointer">
                     <div className="w-10 h-10 rounded-full ring ring-gray-300 ring-offset-2 overflow-hidden shadow-sm">
-                      <img
-                        src={
-                          user?.photoURL
-                            ? user.photoURL
-                            : "https://img.daisyui.com/images/profile/demo/spiderperson@192.webp"
-                        }
-                        alt="User Avatar"
-                      />
+                      <Link to="/dashboard/profile">
+                        <img
+                          src={
+                            user?.photoURL
+                              ? user.photoURL
+                              : "https://img.daisyui.com/images/profile/demo/spiderperson@192.webp"
+                          }
+                          alt="User Avatar"
+                        />
+                      </Link>
                     </div>
                   </div>
                   <button

@@ -83,15 +83,15 @@ const FeaturedBlogsTable = ({ blogs }) => {
   });
 
   return (
-    <div className="overflow-x-auto bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200 p-6">
-      <table className="min-w-full text-sm text-left font-inter border-separate border-spacing-y-2">
+    <div className="w-[98%] mx-auto overflow-x-auto bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200 p-8">
+      <table className="w-full text-sm text-left font-inter border-separate border-spacing-y-2">
         <thead className="bg-gray-100/60 text-gray-700 text-xs uppercase tracking-wide rounded-t-xl">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className={`px-5 py-3 font-semibold ${
+                  className={`px-6 py-3 font-semibold ${
                     header.column.columnDef.meta?.align === "right"
                       ? "text-right"
                       : "text-left"
@@ -118,7 +118,7 @@ const FeaturedBlogsTable = ({ blogs }) => {
               {row.getVisibleCells().map((cell) => (
                 <td
                   key={cell.id}
-                  className={`px-5 py-4 align-middle ${
+                  className={`px-6 py-4 align-middle ${
                     cell.column.columnDef.meta?.align === "right"
                       ? "text-right"
                       : ""

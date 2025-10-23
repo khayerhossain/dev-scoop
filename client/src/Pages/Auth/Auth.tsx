@@ -46,7 +46,7 @@ const Auth = () => {
           setIsLoading(false);
           return;
         }
-        
+
         if (formData.password.length < 6) {
           toast.error("Password must be at least 6 characters!");
           setIsLoading(false);
@@ -54,21 +54,21 @@ const Auth = () => {
         }
 
         const result = await createUser(formData.email, formData.password);
-        
+
         // Update user profile with name
         if (result.user && formData.name) {
           await updateProfile(result.user, {
             displayName: formData.name
           });
         }
-        
+
         toast.success("Account created successfully!");
         navigate("/");
       }
     } catch (error: any) {
       console.error("Auth error:", error);
       let errorMessage = "An error occurred. Please try again.";
-      
+
       if (error.code === "auth/email-already-in-use") {
         errorMessage = "Email is already in use. Please try logging in instead.";
       } else if (error.code === "auth/weak-password") {
@@ -82,7 +82,7 @@ const Auth = () => {
       } else if (error.code === "auth/too-many-requests") {
         errorMessage = "Too many failed attempts. Please try again later.";
       }
-      
+
       toast.error(errorMessage);
     } finally {
       setIsLoading(false);
@@ -189,17 +189,17 @@ const Auth = () => {
       >
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <Link to="/" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", textDecoration: "none", marginBottom: "1rem" }}>
-            <div style={{ 
-              padding: "0.5rem", 
-              borderRadius: "0.5rem", 
+            <div style={{
+              padding: "0.5rem",
+              borderRadius: "0.5rem",
               background: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
               transition: "transform 0.2s"
             }}>
               <Code2 size={24} color="white" />
             </div>
-            <span style={{ 
-              fontSize: "1.5rem", 
-              fontWeight: "bold", 
+            <span style={{
+              fontSize: "1.5rem",
+              fontWeight: "bold",
               background: "linear-gradient(90deg, #3b82f6, #1d4ed8)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent"
@@ -216,10 +216,10 @@ const Auth = () => {
           </div>
 
           <div style={{ marginBottom: "1.5rem" }}>
-            <motion.div 
-              style={{ 
-                display: "flex", 
-                gap: "0.5rem", 
+            <motion.div
+              style={{
+                display: "flex",
+                gap: "0.5rem",
                 marginBottom: "1.5rem",
                 background: "rgba(255, 255, 255, 0.1)",
                 padding: "0.25rem",
@@ -230,7 +230,7 @@ const Auth = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <motion.button 
+              <motion.button
                 style={{
                   ...tabButtonStyle,
                   position: "relative",
@@ -240,7 +240,6 @@ const Auth = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <User size={16} style={{ marginRight: "0.5rem" }} />
                 Login
                 {activeTab === "login" && (
                   <motion.div
@@ -257,7 +256,7 @@ const Auth = () => {
                   />
                 )}
               </motion.button>
-              <motion.button 
+              <motion.button
                 style={{
                   ...tabButtonStyleSignup,
                   position: "relative",
@@ -267,7 +266,6 @@ const Auth = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <UserPlus size={16} style={{ marginRight: "0.5rem" }} />
                 Sign Up
                 {activeTab === "signup" && (
                   <motion.div
@@ -288,9 +286,9 @@ const Auth = () => {
 
             <AnimatePresence mode="wait">
               {activeTab === "login" && (
-                <motion.form 
+                <motion.form
                   key="login"
-                  onSubmit={handleSubmit} 
+                  onSubmit={handleSubmit}
                   style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -328,13 +326,13 @@ const Auth = () => {
                     </label>
                     <div style={{ position: "relative" }}>
                       <input
-                      id="login-password"
+                        id="login-password"
                         name="password"
                         type={showPassword ? "text" : "password"}
-                      placeholder="••••••••"
+                        placeholder="••••••••"
                         value={formData.password}
                         onChange={handleInputChange}
-                      required
+                        required
                         style={inputStyle}
                       />
                       <button
@@ -353,10 +351,10 @@ const Auth = () => {
                       >
                         {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                       </button>
-                  </div>
+                    </div>
                   </motion.div>
-                  <motion.button 
-                    type="submit" 
+                  <motion.button
+                    type="submit"
                     disabled={isLoading}
                     style={{
                       ...buttonStyle,
@@ -379,9 +377,9 @@ const Auth = () => {
               )}
 
               {activeTab === "signup" && (
-                <motion.form 
+                <motion.form
                   key="signup"
-                  onSubmit={handleSubmit} 
+                  onSubmit={handleSubmit}
                   style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -464,28 +462,14 @@ const Auth = () => {
                       >
                         {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                       </button>
-                  </div>
+                    </div>
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
                   >
-                    <label htmlFor="signup-confirm-password" style={{ display: "flex", alignItems: "center", marginBottom: "0.5rem", fontWeight: "500", color: "#374151" }}>
-                      <Lock size={16} style={{ marginRight: "0.5rem" }} />
-                      Confirm Password
-                    </label>
                     <div style={{ position: "relative" }}>
-                      <input
-                        id="signup-confirm-password"
-                        name="confirmPassword"
-                        type={showConfirmPassword ? "text" : "password"}
-                      placeholder="••••••••"
-                        value={formData.confirmPassword}
-                        onChange={handleInputChange}
-                      required
-                        style={inputStyle}
-                      />
                       <button
                         type="button"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -500,12 +484,11 @@ const Auth = () => {
                           color: "#6b7280"
                         }}
                       >
-                        {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                       </button>
-                  </div>
+                    </div>
                   </motion.div>
-                  <motion.button 
-                    type="submit" 
+                  <motion.button
+                    type="submit"
                     disabled={isLoading}
                     style={{
                       ...buttonStyle,
@@ -535,27 +518,27 @@ const Auth = () => {
               transition={{ delay: 0.6 }}
               className="mt-6"
             >
-              <div style={{ 
-                display: "flex", 
-                alignItems: "center", 
-                marginBottom: "1rem" 
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "1rem"
               }}>
-                <div style={{ 
-                  flex: 1, 
-                  height: "1px", 
-                  background: "#e5e7eb" 
+                <div style={{
+                  flex: 1,
+                  height: "1px",
+                  background: "#e5e7eb"
                 }}></div>
-                <span style={{ 
-                  padding: "0 1rem", 
-                  color: "#6b7280", 
-                  fontSize: "0.875rem" 
+                <span style={{
+                  padding: "0 1rem",
+                  color: "#6b7280",
+                  fontSize: "0.875rem"
                 }}>
                   Or continue with
                 </span>
-                <div style={{ 
-                  flex: 1, 
-                  height: "1px", 
-                  background: "#e5e7eb" 
+                <div style={{
+                  flex: 1,
+                  height: "1px",
+                  background: "#e5e7eb"
                 }}></div>
               </div>
 
@@ -578,7 +561,7 @@ const Auth = () => {
                   gap: "0.5rem",
                   transition: "all 0.2s"
                 }}
-                whileHover={{ 
+                whileHover={{
                   scale: isLoading ? 1 : 1.02,
                   boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
                 }}

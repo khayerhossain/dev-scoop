@@ -85,9 +85,9 @@ const WishList = () => {
   };
 
   return (
-    <div className="bg-gray-100 py-10 px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24">
+    <div className=" py-10 px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24">
       <div className="text-center mb-10">
-        <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2 mt-10">
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">
           {" "}
           My Wishlist
         </h2>

@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router';
-import { 
-  Plus, 
-  BookOpen, 
-  Heart, 
-  TrendingUp, 
-  Eye, 
-  MessageCircle, 
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router";
+import {
+  Plus,
+  BookOpen,
+  Heart,
+  TrendingUp,
+  Eye,
+  MessageCircle,
   Users,
   Calendar,
   BarChart3,
   Brain,
   Search,
-  Star
-} from 'lucide-react';
+  Star,
+  BookmarkCheck,
+} from "lucide-react";
 
 const DashboardHome = () => {
   const [stats, setStats] = useState({
     totalBlogs: 0,
     totalViews: 0,
     totalComments: 0,
-    totalWishlist: 0
+    totalWishlist: 0,
   });
   const [recentBlogs, setRecentBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,27 +33,45 @@ const DashboardHome = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/allblogsdata`);
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/allblogsdata`
+      );
       const blogs = await response.json();
-      
+
       // Calculate stats (simulated for demo)
       setStats({
         totalBlogs: blogs.length,
-        totalViews: blogs.reduce((sum, blog) => sum + (Math.floor(Math.random() * 1000) + 100), 0),
-        totalComments: blogs.reduce((sum, blog) => sum + (Math.floor(Math.random() * 50)), 0),
-        totalWishlist: blogs.reduce((sum, blog) => sum + (Math.floor(Math.random() * 100)), 0)
+        totalViews: blogs.reduce(
+          (sum, blog) => sum + (Math.floor(Math.random() * 1000) + 100),
+          0
+        ),
+        totalComments: blogs.reduce(
+          (sum, blog) => sum + Math.floor(Math.random() * 50),
+          0
+        ),
+        totalWishlist: blogs.reduce(
+          (sum, blog) => sum + Math.floor(Math.random() * 100),
+          0
+        ),
       });
 
       // Get recent blogs (last 5)
       setRecentBlogs(blogs.slice(0, 5));
     } catch (error) {
-      console.error('Error fetching dashboard data:', error);
+      console.error("Error fetching dashboard data:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const StatCard = ({ title, value, icon: Icon, color, change, changeType }) => (
+  const StatCard = ({
+    title,
+    value,
+    icon: Icon,
+    color,
+    change,
+    changeType,
+  }) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -61,13 +80,18 @@ const DashboardHome = () => {
       <div className="flex items-center justify-between">
         <div>
           <p className="text-gray-600 text-sm font-medium">{title}</p>
-          <p className="text-3xl font-bold text-gray-900 mt-2">{value.toLocaleString()}</p>
+          <p className="text-3xl font-bold text-gray-900 mt-2">
+            {value.toLocaleString()}
+          </p>
           {change && (
             <div className="flex items-center mt-2">
-              <span className={`text-sm font-medium ${
-                changeType === 'increase' ? 'text-green-600' : 'text-red-600'
-              }`}>
-                {changeType === 'increase' ? '+' : '-'}{change}%
+              <span
+                className={`text-sm font-medium ${
+                  changeType === "increase" ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {changeType === "increase" ? "+" : "-"}
+                {change}%
               </span>
               <span className="text-gray-500 text-sm ml-2">vs last month</span>
             </div>
@@ -81,16 +105,15 @@ const DashboardHome = () => {
   );
 
   const QuickActionCard = ({ title, description, icon: Icon, href, color }) => (
-    <motion.div
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-    >
+    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
       <Link
         to={href}
         className="block bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 group"
       >
         <div className="flex items-center space-x-4">
-          <div className={`p-3 rounded-xl ${color} group-hover:scale-110 transition-transform duration-200`}>
+          <div
+            className={`p-3 rounded-xl ${color} group-hover:scale-110 transition-transform duration-200`}
+          >
             <Icon className="w-6 h-6 text-white" />
           </div>
           <div>
@@ -106,7 +129,7 @@ const DashboardHome = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
+      <div className="flex items-center justify-center h-64 min-h-screen">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
@@ -126,7 +149,9 @@ const DashboardHome = () => {
       >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Welcome to Your Dashboard</h1>
+            <h1 className="text-3xl font-bold mb-2">
+              Welcome to Your Dashboard
+            </h1>
             <p className="text-blue-100 text-lg">
               Manage your blogs, track performance, and grow your audience
             </p>
@@ -178,7 +203,7 @@ const DashboardHome = () => {
       {/* Quick Actions */}
       <div>
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <QuickActionCard
             title="Write New Blog"
             description="Create and publish a new blog post"
@@ -199,6 +224,13 @@ const DashboardHome = () => {
             icon={BookOpen}
             href="/dashboard/my-blogs"
             color="bg-purple-500"
+          />
+          <QuickActionCard
+            title="Wishlist"
+            description="View and edit your blog posts"
+            icon={BookmarkCheck}
+            href="/dashboard/wishlist"
+            color="bg-red-500"
           />
         </div>
       </div>
@@ -238,7 +270,9 @@ const DashboardHome = () => {
                     {blog.title}
                   </h4>
                   <p className="text-xs text-gray-500">
-                    {new Date(blog.createdAt || Date.now()).toLocaleDateString()}
+                    {new Date(
+                      blog.createdAt || Date.now()
+                    ).toLocaleDateString()}
                   </p>
                 </div>
                 <div className="flex items-center space-x-2 text-xs text-gray-500">
@@ -257,14 +291,18 @@ const DashboardHome = () => {
           transition={{ delay: 0.3 }}
           className="bg-white rounded-2xl shadow-lg p-6"
         >
-          <h3 className="text-xl font-bold text-gray-900 mb-6">Performance Overview</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-6">
+            Performance Overview
+          </h3>
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
                   <TrendingUp className="w-4 h-4 text-green-600" />
                 </div>
-                <span className="text-sm font-medium text-gray-900">Engagement Rate</span>
+                <span className="text-sm font-medium text-gray-900">
+                  Engagement Rate
+                </span>
               </div>
               <span className="text-lg font-bold text-green-600">+12.5%</span>
             </div>
@@ -273,7 +311,9 @@ const DashboardHome = () => {
                 <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                   <Users className="w-4 h-4 text-blue-600" />
                 </div>
-                <span className="text-sm font-medium text-gray-900">New Followers</span>
+                <span className="text-sm font-medium text-gray-900">
+                  New Followers
+                </span>
               </div>
               <span className="text-lg font-bold text-blue-600">+8</span>
             </div>
@@ -282,7 +322,9 @@ const DashboardHome = () => {
                 <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
                   <Star className="w-4 h-4 text-purple-600" />
                 </div>
-                <span className="text-sm font-medium text-gray-900">Top Performing Blog</span>
+                <span className="text-sm font-medium text-gray-900">
+                  Top Performing Blog
+                </span>
               </div>
               <span className="text-sm text-gray-600">React Hooks Guide</span>
             </div>
@@ -291,7 +333,9 @@ const DashboardHome = () => {
                 <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
                   <Calendar className="w-4 h-4 text-orange-600" />
                 </div>
-                <span className="text-sm font-medium text-gray-900">Last Published</span>
+                <span className="text-sm font-medium text-gray-900">
+                  Last Published
+                </span>
               </div>
               <span className="text-sm text-gray-600">2 days ago</span>
             </div>
@@ -303,4 +347,3 @@ const DashboardHome = () => {
 };
 
 export default DashboardHome;
-

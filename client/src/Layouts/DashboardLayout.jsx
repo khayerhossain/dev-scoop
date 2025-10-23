@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Outlet, useLocation } from "react-router";
+import { Link, Outlet, useLocation } from "react-router";
 import { motion } from "framer-motion";
 import { Bell, Settings } from "lucide-react";
 import { AuthContext } from "../Providers/AuthContext";
@@ -31,18 +31,23 @@ const DashboardLayout = () => {
                 {mainNavigation.find((item) => isActive(item.href))?.name ||
                   "Dashboard"}
               </h2>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 hidden lg:block">
                 Welcome back, {user?.displayName || "User"}!
               </p>
             </div>
             <div className="flex items-center space-x-4">
               <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative">
-                <Bell className="w-5 h-5 text-gray-600" />
+                <Bell className="w-5 h-5 text-gray-600 hidden lg:block" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
               <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                <Settings className="w-5 h-5 text-gray-600" />
+                <Settings className="w-5 h-5 text-gray-600 hidden lg:block" />
               </button>
+              <Link to="/">
+                <button className="btn border-none bg-black text-white hover:bg-gray-900 roiunded-xl ">
+                  Back Home
+                </button>
+              </Link>
             </div>
           </div>
         </div>
