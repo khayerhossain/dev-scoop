@@ -1,71 +1,77 @@
-import React from 'react';
+import React from "react";
 import {
   useReactTable,
   getCoreRowModel,
   flexRender,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
+import { Star } from "lucide-react";
 
 const FeaturedBlogsTable = ({ blogs }) => {
   const columns = React.useMemo(
     () => [
       {
-        accessorKey: '_id',
-        header: '#',
+        accessorKey: "_id",
+        header: "#",
         cell: (info) => info.row.index + 1,
       },
       {
-        id: 'select',
-        header: () => <input type="checkbox" />,
-        cell: () => <input type="checkbox" />,
+        id: "select",
+        header: () => <input type="checkbox" className="accent-violet-600" />,
+        cell: () => <input type="checkbox" className="accent-violet-600" />,
       },
       {
-        accessorKey: 'title',
-        header: 'Title',
-      },
-      {
-        id: 'tag',
-        header: 'Tag',
-        cell: () => (
-          <small className="inline-flex text-white bg-violet-600 px-3 py-1 rounded-full">
-            Featured Dev
-          </small>
-        ),
-      },
-      {
-        accessorKey: 'category',
-        header: 'Category',
+        accessorKey: "title",
+        header: "Title",
         cell: (info) => (
-          <span className="inline-block bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full capitalize">
+          <span className="font-medium text-gray-800 line-clamp-1">
             {info.getValue()}
           </span>
         ),
       },
       {
-        accessorKey: 'wordCount',
-        header: 'Word Count',
-      },
-      {
-        accessorKey: 'date',
-        header: 'Date',
-        cell: (info) => info.getValue() || 'N/A',
-      },
-      {
-        id: 'type',
-        header: 'Type',
+        id: "tag",
+        header: "Tag",
         cell: () => (
-          <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full border border-gray-400 text-gray-700">
+          <span className="inline-flex items-center gap-1 bg-violet-100 text-violet-700 px-3 py-1 text-xs font-semibold rounded-full">
+            <Star size={14} />
+            Featured Dev
+          </span>
+        ),
+      },
+      {
+        accessorKey: "category",
+        header: "Category",
+        cell: (info) => (
+          <span className="inline-block bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full capitalize">
+            {info.getValue()}
+          </span>
+        ),
+      },
+      {
+        accessorKey: "wordCount",
+        header: "Word Count",
+        cell: (info) => (
+          <span className="text-gray-700">{info.getValue() ?? "-"}</span>
+        ),
+      },
+      {
+        accessorKey: "date",
+        header: "Date",
+        cell: (info) => (
+          <span className="text-gray-600 text-sm">
+            {info.getValue() || "N/A"}
+          </span>
+        ),
+      },
+      {
+        id: "type",
+        header: "Type",
+        cell: () => (
+          <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full border border-gray-300 text-gray-700 bg-gray-50">
             Blog
           </span>
         ),
       },
-      // {
-      //   id: 'actions',
-      //   header: 'Actions',
-      //   cell: () => (
-      //     <button className="text-gray-400 hover:text-gray-700 text-xl">⋯</button>
-      //   ),
-      //   meta: { align: 'right' },
-      // },
     ],
     []
   );
@@ -77,41 +83,45 @@ const FeaturedBlogsTable = ({ blogs }) => {
   });
 
   return (
-    <div className="overflow-x-auto bg-white rounded-xl shadow-lg border-2 border-violet-600 p-6">
-      <table className="min-w-full text-sm text-left font-inter">
-        <thead className="bg-gray-50 text-gray-600 uppercase text-xs border-b">
+    <div className="overflow-x-auto bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200 p-6">
+      <table className="min-w-full text-sm text-left font-inter border-separate border-spacing-y-2">
+        <thead className="bg-gray-100/60 text-gray-700 text-xs uppercase tracking-wide rounded-t-xl">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className={`px-4 py-3 ${
-                    header.column.columnDef.meta?.align === 'right'
-                      ? 'text-right'
-                      : ''
+                  className={`px-5 py-3 font-semibold ${
+                    header.column.columnDef.meta?.align === "right"
+                      ? "text-right"
+                      : "text-left"
                   }`}
                 >
                   {header.isPlaceholder
                     ? null
-                    : flexRender(header.column.columnDef.header, header.getContext())}
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </th>
               ))}
             </tr>
           ))}
         </thead>
-        <tbody className="text-gray-700">
+
+        <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr
               key={row.id}
-              className="border-t hover:bg-gray-50 transition duration-150"
+              className="bg-white hover:bg-violet-50/70 transition-all duration-200 shadow-sm rounded-xl"
             >
               {row.getVisibleCells().map((cell) => (
                 <td
                   key={cell.id}
-                  className={`px-4 py-4 ${
-                    cell.column.columnDef.meta?.align === 'right'
-                      ? 'text-right'
-                      : ''
+                  className={`px-5 py-4 align-middle ${
+                    cell.column.columnDef.meta?.align === "right"
+                      ? "text-right"
+                      : ""
                   }`}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -11,29 +11,64 @@ import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import AddBlogs from "../Pages/AddBlogs/AddBlogs";
 import Error from "../Error/Error";
 import UpdateBlog from "../Pages/UpdateBlog/UpdateBlog";
+import Profile from "../Pages/Profile/Profile";
 
-
-export const router=createBrowserRouter([
-    {path:"/",
-        Component:Layouts,
-        children:[
-            {path:"/", Component:Home},
-            {path:"addblogs", element:<PrivateRoute>
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    Component: Layouts,
+    children: [
+      { path: "/", Component: Home },
+      {
+        path: "addblogs",
+        element: (
+          <PrivateRoute>
             <AddBlogs></AddBlogs>
-            </PrivateRoute>},
-            {path:"allblogs",
-                loader:()=> fetch(`${import.meta.env.VITE_API_URL}/allblogsdata`),
-                Component:AllBlogs},
-            {path:"featuredblogs", Component:FeaturedBlogs},
-            {path:"wishlist", element:<PrivateRoute><WishList></WishList></PrivateRoute>},
-            {path:"login", Component:Login},
-            {path:"register", Component:Register},
-            {path:"blogdetails/:id",
-                loader:()=> fetch(`${import.meta.env.VITE_API_URL}/allblogsdata`),
-                element:<PrivateRoute><BlogDetails></BlogDetails></PrivateRoute>},
-                { path: 'updateblog/:id', element: <PrivateRoute><UpdateBlog /></PrivateRoute> },
-                {path:'*', Component:Error}
-
-        ]
-    }
-])
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "allblogs",
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/allblogsdata`),
+        Component: AllBlogs,
+      },
+      { path: "featuredblogs", Component: FeaturedBlogs },
+      {
+        path: "wishlist",
+        element: (
+          <PrivateRoute>
+            <WishList></WishList>
+          </PrivateRoute>
+        ),
+      },
+      { path: "login", Component: Login },
+      { path: "register", Component: Register },
+      {
+        path: "blogdetails/:id",
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/allblogsdata`),
+        element: (
+          <PrivateRoute>
+            <BlogDetails></BlogDetails>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "updateblog/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateBlog />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
+      { path: "*", Component: Error },
+    ],
+  },
+]);

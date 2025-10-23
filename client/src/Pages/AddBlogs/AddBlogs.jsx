@@ -1,12 +1,17 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import usePageTitle from "../../PageTitle/PageTitle";
 import Container from "../../components/container/container";
 
 const AddBlogs = () => {
   usePageTitle("AddBlogs");
+
+  const [step, setStep] = useState(1);
+
+  const handleNext = () => setStep(2);
+  const handleBack = () => setStep(1);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,6 +32,7 @@ const AddBlogs = () => {
             timer: 1500,
           });
           form.reset();
+          setStep(1);
         }
       })
       .catch((error) => {
@@ -34,155 +40,201 @@ const AddBlogs = () => {
       });
   };
 
-  // Animation Variants
-  const containerVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+  const pageVariants = {
+    hidden: { opacity: 0, x: 50 },
+    visible: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -50 },
   };
 
   return (
-    <section className="w-full min-h-screen flex items-center justify-center bg-base-200 py-20 mt-5">
+    <section className="min-h-screen flex items-center justify-center bg-white py-20 mt-5">
       <Container>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="w-full bg-white text-gray-800 rounded-2xl shadow-lg border border-gray-200 p-8"
-        >
-          <motion.h2
-            variants={itemVariants}
-            className="text-3xl font-extrabold mb-10 text-center text-gray-900 tracking-tight"
-          >
+        <div className="w-full bg-white text-black rounded-2xl shadow-2xl border border-gray-100 p-10">
+          {/* Progress Bar */}
+          <div className="flex items-center justify-between mb-10 relative">
+            <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-full h-[3px] bg-gray-200" />
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: step === 1 ? "50%" : "100%" }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 h-[3px] bg-black rounded-full"
+            />
+            <div className="relative z-10 flex justify-between w-full">
+              <div
+                className={`w-10 h-10 flex items-center justify-center rounded-full font-bold ${
+                  step >= 1
+                    ? "bg-black text-white"
+                    : "bg-gray-200 text-gray-500"
+                }`}
+              >
+                1
+              </div>
+              <div
+                className={`w-10 h-10 flex items-center justify-center rounded-full font-bold ${
+                  step === 2
+                    ? "bg-black text-white"
+                    : "bg-gray-200 text-gray-500"
+                }`}
+              >
+                2
+              </div>
+            </div>
+          </div>
+
+          <h2 className="text-4xl font-extrabold mb-10 text-center text-gray-900 tracking-tight">
             Add a New Blog
-          </motion.h2>
+          </h2>
 
-          <motion.form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-8 w-full"
-            initial="hidden"
-            animate="visible"
-            transition={{ staggerChildren: 0.1 }}
-          >
-            {/* Group 1 */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-wrap gap-8"
-            >
-              <div className="flex-1 min-w-[250px]">
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Blog Title
-                </label>
-                <input
-                  type="text"
-                  name="title"
-                  placeholder="Enter your blog title here"
-                  required
-                  className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm 
-                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-                />
-              </div>
-              <div className="flex-1 min-w-[250px]">
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Image URL
-                </label>
-                <input
-                  type="text"
-                  name="imageURL"
-                  placeholder="Paste image link here"
-                  required
-                  className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm 
-                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-                />
-              </div>
-            </motion.div>
-
-            {/* Group 2 */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-wrap gap-8"
-            >
-              <div className="flex-1 min-w-[250px]">
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Category
-                </label>
-                <select
-                  name="category"
-                  required
-                  className="w-full px-5 py-3 border border-gray-300 rounded-xl bg-white shadow-sm 
-                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          <form onSubmit={handleSubmit} className="relative">
+            <AnimatePresence mode="wait">
+              {step === 1 && (
+                <motion.div
+                  key="step1"
+                  variants={pageVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  transition={{ duration: 0.4 }}
+                  className="flex flex-col gap-10"
                 >
-                  <option value="">Select a Category</option>
-                  <option value="Technology">Technology</option>
-                  <option value="Tips">Tips</option>
-                  <option value="Inspiration">Inspiration</option>
-                  <option value="News">News</option>
-                </select>
-              </div>
-              <div className="flex-1 min-w-[250px]">
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Publish Date
-                </label>
-                <input
-                  type="date"
-                  name="date"
-                  defaultValue={new Date().toISOString().split("T")[0]}
-                  required
-                  className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm 
-                  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-                />
-              </div>
-            </motion.div>
+                  {/* Title & Image */}
+                  <div className="flex flex-wrap gap-8">
+                    <div className="flex-1 min-w-[250px]">
+                      <label className="block text-gray-700 font-semibold mb-2">
+                        Blog Title
+                      </label>
+                      <input
+                        type="text"
+                        name="title"
+                        placeholder="Enter your blog title"
+                        required
+                        className="w-full px-5 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white 
+                        focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300 shadow-sm"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-[250px]">
+                      <label className="block text-gray-700 font-semibold mb-2">
+                        Image URL
+                      </label>
+                      <input
+                        type="text"
+                        name="imageURL"
+                        placeholder="Paste image link"
+                        required
+                        className="w-full px-5 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white 
+                        focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300 shadow-sm"
+                      />
+                    </div>
+                  </div>
 
-            {/* Short Description */}
-            <motion.div variants={itemVariants}>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Short Description
-              </label>
-              <textarea
-                name="shortDescription"
-                placeholder="Write a short preview/summary..."
-                required
-                rows={3}
-                className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm 
-                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-none"
-              ></textarea>
-            </motion.div>
+                  {/* Category & Date */}
+                  <div className="flex flex-wrap gap-8">
+                    <div className="flex-1 min-w-[250px]">
+                      <label className="block text-gray-700 font-semibold mb-2">
+                        Category
+                      </label>
+                      <select
+                        name="category"
+                        required
+                        className="w-full px-5 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white 
+                        focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300 shadow-sm"
+                      >
+                        <option value="">Select a Category</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Tips">Tips</option>
+                        <option value="Inspiration">Inspiration</option>
+                        <option value="News">News</option>
+                      </select>
+                    </div>
+                    <div className="flex-1 min-w-[250px]">
+                      <label className="block text-gray-700 font-semibold mb-2">
+                        Publish Date
+                      </label>
+                      <input
+                        type="date"
+                        name="date"
+                        defaultValue={new Date().toISOString().split("T")[0]}
+                        required
+                        className="w-full px-5 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white 
+                        focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300 shadow-sm"
+                      />
+                    </div>
+                  </div>
 
-            {/* Long Description */}
-            <motion.div variants={itemVariants}>
-              <label className="block text-gray-700 font-semibold mb-2">
-                Long Description
-              </label>
-              <textarea
-                name="longDescription"
-                placeholder="Write the full blog content here..."
-                required
-                rows={6}
-                className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm 
-                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-none"
-              ></textarea>
-            </motion.div>
+                  <div className="flex justify-end mt-6">
+                    <button
+                      type="button"
+                      onClick={handleNext}
+                      className="bg-black text-white px-8 py-3 rounded-xl font-semibold hover:bg-gray-800 
+                      transition-all shadow-md hover:shadow-lg"
+                    >
+                      Next →
+                    </button>
+                  </div>
+                </motion.div>
+              )}
 
-            {/* Submit Button */}
-            <motion.div variants={itemVariants}>
-              <input
-                type="submit"
-                value="Submit Blog"
-                className="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold 
-                hover:bg-indigo-700 transition shadow-md cursor-pointer"
-              />
-            </motion.div>
-          </motion.form>
-        </motion.div>
+              {step === 2 && (
+                <motion.div
+                  key="step2"
+                  variants={pageVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  transition={{ duration: 0.4 }}
+                  className="flex flex-col gap-10"
+                >
+                  {/* Short Description */}
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Short Description
+                    </label>
+                    <textarea
+                      name="shortDescription"
+                      placeholder="Write a short preview/summary..."
+                      required
+                      rows={3}
+                      className="w-full px-5 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white 
+                      focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300 shadow-sm resize-none"
+                    ></textarea>
+                  </div>
+
+                  {/* Long Description */}
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Long Description
+                    </label>
+                    <textarea
+                      name="longDescription"
+                      placeholder="Write your full blog content..."
+                      required
+                      rows={6}
+                      className="w-full px-5 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white 
+                      focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-300 shadow-sm resize-none"
+                    ></textarea>
+                  </div>
+
+                  <div className="flex justify-between mt-6">
+                    <button
+                      type="button"
+                      onClick={handleBack}
+                      className="bg-gray-100 text-gray-800 px-8 py-3 rounded-xl font-semibold hover:bg-gray-200 
+                      transition-all shadow-sm hover:shadow-md"
+                    >
+                      ← Back
+                    </button>
+                    <input
+                      type="submit"
+                      value="Submit Blog"
+                      className="bg-black text-white px-8 py-3 rounded-xl font-semibold hover:bg-gray-800 
+                      transition-all shadow-md hover:shadow-lg cursor-pointer"
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </form>
+        </div>
       </Container>
     </section>
   );
