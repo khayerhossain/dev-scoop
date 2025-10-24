@@ -6,7 +6,7 @@ import RecentBlogs from "./RecentBlogs/RecentBlogs";
 import Tips from "./Tips/Tips";
 import usePageTitle from "../PageTitle/PageTitle";
 import ExtraSection from "../Pages/ExtraSection/ExtraSection";
-import CreateAccount from "../Pages/CreateAccount/CreateAccount";
+// import CreateAccount from "../Pages/CreateAccount/CreateAccount";
 
 const Home = () => {
   usePageTitle("Home");
