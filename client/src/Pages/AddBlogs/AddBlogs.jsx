@@ -47,7 +47,7 @@ const AddBlogs = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-white py-20 mt-5">
+    <section className="min-h-screen flex items-center justify-center ">
       <Container>
         <div className="w-full bg-white text-black rounded-2xl shadow-2xl border border-gray-100 p-10">
           {/* Progress Bar */}
